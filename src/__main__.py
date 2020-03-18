@@ -103,7 +103,7 @@ class TreeVisualizer(QWidget):
         )
 
         # enables/disables forces (True by default - they're fun!)
-        self.forces_checkbox = QCheckBox(text="forces", checked=True)
+        # self.forces_checkbox = QCheckBox(text="forces", checked=False)
 
         # input of the labels and vertex weights
         self.input_line_edit = QLineEdit(
@@ -138,7 +138,7 @@ class TreeVisualizer(QWidget):
         self.option_h_layout.addSpacing(self.layout_item_spacing)
         self.option_h_layout.addWidget(self.labels_checkbox)
         self.option_h_layout.addSpacing(self.layout_item_spacing)
-        self.option_h_layout.addWidget(self.forces_checkbox)
+        # self.option_h_layout.addWidget(self.forces_checkbox)
         self.option_h_layout.addSpacing(self.layout_item_spacing)
         self.option_h_layout.addWidget(self.input_line_edit)
 
@@ -183,14 +183,16 @@ class TreeVisualizer(QWidget):
 
     def repulsion_force(self, distance: float) -> float:
         """Calculates the strength of the repulsion force at the specified distance."""
-        return 1 / distance * 10 if self.forces_checkbox.isChecked() else 0
+        # return 1 / distance * 10 if self.forces_checkbox.isChecked() else 0
+        return 0
 
     def attraction_force(self, distance: float, leash_length=80) -> float:
         """Calculates the strength of the attraction force at the specified distance 
         and leash length."""
-        return (
-            -(distance - leash_length) / 10 if self.forces_checkbox.isChecked() else 0
-        )
+        # return (
+        #     -(distance - leash_length) / 10 if self.forces_checkbox.isChecked() else 0
+        # )
+        return 0
 
     def import_graph(self):
         """Is called when the import button is clicked; imports a graph from a file."""
@@ -609,21 +611,21 @@ class TreeVisualizer(QWidget):
                 uv = (n2.get_position() - n1.get_position()).unit()
 
                 # the size of the repel force between the two nodes
-                fr = self.repulsion_force(d)
+                #fr = self.repulsion_force(d)
 
                 # add a repel force to each of the nodes, in the opposite directions
-                n1.add_force(-uv * fr)
-                n2.add_force(uv * fr)
+               # n1.add_force(-uv * fr)
+               # n2.add_force(uv * fr)
 
                 # if they are also connected, add the attraction force
-                if self.graph.does_vertex_exist(n1, n2, ignore_direction=True):
-                    fa = self.attraction_force(d)
+                #if self.graph.does_vertex_exist(n1, n2, ignore_direction=True):
+                #    fa = self.attraction_force(d)
 
-                    n1.add_force(-uv * fa)
-                    n2.add_force(uv * fa)
+                #    n1.add_force(-uv * fa)
+                #    n2.add_force(uv * fa)
 
             # since this node will not be visited again, we can evaluate the forces
-            n1.evaluate_forces()
+            # n1.evaluate_forces()
 
         # drag the selected node
         if self.selected_node is not None and self.mouse_drag_offset is not None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Set, List, Union
+import random
 
 
 class Node:
@@ -137,7 +138,8 @@ class Graph:
                     if node is neighbour:
                         self.remove_vertex(node, neighbour)
                     else:
-                        self.add_vertex(neighbour, node, weight=0)
+                        # self.add_vertex(neighbour, node, weight=0)
+                        self.add_vertex(neighbour, node, weight=get_weight(node, neighbour))
 
         self.directed = value
 
@@ -191,13 +193,15 @@ class Graph:
 
         self.calculate_components()
 
-    def add_vertex(self, n1: Node, n2: Node, weight: float = 0):
+    def add_vertex(self, n1: Node, n2: Node, weight: float = None):
         """Adds a vertex from node n1 to node n2 (and vice versa, if it's not directed).
         Only does so if the given vertex doesn't already exist and can be added (ex.:
         if the graph is not directed and the node wants to point to itself -- we can't
         allow that."""
         if n1 is n2 and not self.directed:
             return
+        if weight is None:
+            weight = round(random.uniform(0.5, 10.), 1)
 
         # from n1 to n2
         n1.neighbours[n2] = weight
