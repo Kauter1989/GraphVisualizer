@@ -764,7 +764,7 @@ class TreeVisualizer(QWidget):
             weight_rectangle = self.get_vertex_weight_rect(n1, n2, weight)
             painter.drawRect(weight_rectangle)
 
-            painter.setFont(QFont(self.font_family, self.font_size / 3))
+            painter.setFont(QFont(self.font_family, int(self.font_size / 4)))
 
             painter.setPen(QPen(Qt.white, Qt.SolidLine))
             painter.drawText(weight_rectangle, Qt.AlignCenter, str(weight))
